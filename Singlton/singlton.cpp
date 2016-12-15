@@ -7,8 +7,8 @@ public:
       return s;
     }
 private:
-  Singleton() { ... } 
-  ~Singleton() { ... }
+  Singleton() {} 
+  ~Singleton() {}
   Singleton(Singleton const&) = delete;
   Singleton& operator= (Singleton const&) = delete;
 };
