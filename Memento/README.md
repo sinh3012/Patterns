@@ -1,7 +1,7 @@
 # Memento
 ### Тип: Поведенческий
 
-![Image alt](https://github.com/sinh3012/Patterns/Memento/c08bf17ee80d42272441cafbcce1a2dd.jpg)
+![Image alt](https://github.com/sinh3012/Patterns/blob/master/Memento/c08bf17ee80d42272441cafbcce1a2dd.jpg)
 
 **Хранитель** - Шаблон проектирования, позволяющий, не нарушая инкапсуляцию, зафиксировать и сохранить внутреннее состояние объекта так, чтобы позднее восстановить его в это состояние.
 ## Описание
