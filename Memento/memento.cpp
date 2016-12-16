@@ -47,6 +47,6 @@ int main(){
     A.add(202);
     A.doubble();
     std::cout << A.GetState()<< "\n"; // 404
-    Case.ReinstateMemento(B.GetMemento());
+    A.ReinstateMemento(B.GetMemento());
     std::cout << A.GetState()<< "\n"; // 3012
 }
