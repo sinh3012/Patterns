@@ -17,11 +17,13 @@ class Originator
 public:
     Originator() : state_(3012) {}
     ~Originator() {}
-    auto RestoreToMemento(Memento* nMemento) -> void { state_ = nMemento->GetState(); }
     auto CreateMemento() -> Memento* { return new Memento(state_); }
+    auto SetMemento(Memento* Mem) -> Memento* { return Mem.SetState(state_); }
     auto ClearState() -> void { state_ = 0; }
     auto GetState() -> size_t { return state_; }
-    auto add() -> void { ++state_; }
+    auto add(size_t value_) -> void { state_ + = value_; }
+    auto dubble() -> void { state_ = state_ * 2; }
+    auto ReinstateMemento(Memento* Mem-> void { state_ = Mem->GetState(); }
 private:
     size_t state_;
 };
@@ -38,12 +40,13 @@ private:
 };
 
 int main(){
-    Originator A = *new Originator();
-    Caretaker B = *new Caretaker();
+    Originator A;
+    Caretaker B;
     B.SetMemento(A.CreateMemento());
     A.ClearState();
-    A.add()
-    std::cout << A.GetState()<< "\n"; // 3013
-    Case.RestoreToMemento(B.GetMemento());
+    A.add(202);
+    A.doubble();
+    std::cout << A.GetState()<< "\n"; // 404
+    Case.ReinstateMemento(B.GetMemento());
     std::cout << A.GetState()<< "\n"; // 3012
 }
