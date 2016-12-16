@@ -23,7 +23,7 @@ public:
     auto GetState() -> size_t { return state_; }
     auto add(size_t value_) -> void { state_ + = value_; }
     auto dubble() -> void { state_ = state_ * 2; }
-    auto ReinstateMemento(Memento* Mem-> void { state_ = Mem->GetState(); }
+    auto ReinstateMemento(Memento* Mem) -> void { state_ = Mem.GetState(); }
 private:
     size_t state_;
 };
