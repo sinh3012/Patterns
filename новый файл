@@ -1,0 +1,44 @@
+<html>
+<body>
+	<script>
+		function onClick(event) {
+			ctx.fillRect(event.offsetX,event.offsetY,3,3);
+		}
+		function moveClick(event) {
+		if (a==1)
+			ctx.fillRect(event.offsetX,event.offsetY,3,3);
+		}
+		function downClick(event) {
+			a = 1;
+		}
+		function upClick(event) {
+		 	a = 0;
+		}
+	</script>
+	<canvas id='lab01' height='1000' width='1000'>
+		<script>
+			var a = 0;
+			var canvas = document.getElementById('lab01');
+			var ctx = canvas.getContext('2d');
+			canvas.addEventListener('mousedown', onClick);
+			canvas.addEventListener('mousedown', downClick);
+			canvas.addEventListener('mousemove', moveClick);
+			canvas.addEventListener('mouseup', upClick);
+			ctx.fillStyle = '#00ff00';
+			ctx.fillRect(10,10,100,100);
+
+			var arr = new Array(100);
+			for (i=0;i<100;i++) {
+				if (i<=50 || i>=80) arr[i] = 1;
+				else arr[i] = 0;
+			}
+
+			ctx.fillStyle = '#bb0000';
+			for (i=0;i<100;i++) {
+				if (arr[i] == 1)
+					ctx.fillRect(i,i,1,1);
+			}
+		</script>
+	</canvas>
+</body>
+</html>
