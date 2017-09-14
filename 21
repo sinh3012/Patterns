@@ -1,0 +1,139 @@
+<html>
+<body>
+<script>
+		function onClick(event) {
+			ctx.fillRect(event.offsetX,event.offsetY,3,3);
+		}
+		function moveClick(event) {
+		if (a==1)
+			ctx.fillRect(event.offsetX,event.offsetY,3,3);
+		}
+		function downClick(event) {
+			a = 1;
+		}
+		function upClick(event) {
+		 	a = 0;
+		}
+</script>
+
+<table>
+	<tr><td>Text to Save:</td></tr>
+	<tr>
+		<td colspan="3">
+			<textarea id="inputTextToSave" style="width:512px;height:256px"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td>Filename to Save As:</td>
+		<td><input id="inputFileNameToSaveAs"></input></td>
+		<td><button onclick="saveTextAsFile()">Save Text to File</button></td>
+	</tr>
+	<tr>
+		<td>Select a File to Load:</td>
+		<td><input type="file" id="fileToLoad"></td>
+		<td><button onclick="loadFileAsText()">Load Selected File</button><td>
+	</tr>
+	<tr>
+		<td><button onclick="Clear()">Clear</button><td>
+	</tr>
+</table>
+<canvas id='lab01' height='100' width='100' style='border:1px solid;'>
+		<script>
+			var a = 0;
+			var canvas = document.getElementById('lab01');
+			var ctx = canvas.getContext('2d');
+			canvas.addEventListener('mousedown', onClick);
+			canvas.addEventListener('mousedown', downClick);
+			canvas.addEventListener('mousemove', moveClick);
+			canvas.addEventListener('mouseup', upClick);
+			/*
+			ctx.fillStyle = '#00ff00';
+			ctx.fillRect(10,10,100,100);
+
+			var arr = new Array(100);
+			for (i=0;i<100;i++) {
+				if (i<=50 || i>=80) arr[i] = 1;
+				else arr[i] = 0;
+			}
+
+			ctx.fillStyle = '#bb0000';
+			for (i=0;i<100;i++) {
+				if (arr[i] == 1)
+					ctx.fillRect(i,i,1,1);
+			}*/
+		</script>
+</canvas>
+<script type='text/javascript'>
+
+function saveTextAsFile()
+{
+	var output = '';
+	var pix = ctx.getImageData(0,0,canvas.width, canvas.height);
+	for (y=0;y<canvas.height;y++) {
+			for (x=0;x<canvas.width;x++) {
+					if (pix.data[(x+y*canvas.width)*4+3]!=0) output+='1';
+					else output+='0';
+			}
+	}
+	
+	//var textToWrite = document.getElementById("inputTextToSave").value;
+	var textToWrite = output; 
+	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+	var fileNameToSaveAs ="123";// document.getElementById("inputFileNameToSaveAs").value;
+
+	var downloadLink = document.createElement("a");
+	downloadLink.download = fileNameToSaveAs;
+	downloadLink.innerHTML = "Download File";
+	if (window.webkitURL != null)
+	{
+		// Chrome allows the link to be clicked
+		// without actually adding it to the DOM.
+		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+	}
+	else
+	{
+		// Firefox requires the link to be added to the DOM
+		// before it can be clicked.
+		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+	}
+
+	downloadLink.click();
+}
+
+function destroyClickedElement(event)
+{
+	document.body.removeChild(event.target);
+}
+
+function Clear()
+{
+	canvas.width = canvas.width;
+}
+
+function loadFileAsText()
+{
+	var fileToLoad = document.getElementById("fileToLoad").files[0];
+	ctx.fillStyle = '#00ff00';
+	var fileReader = new FileReader();
+	fileReader.onload = function(fileLoadedEvent) 
+	{
+		var textFromFileLoaded = fileLoadedEvent.target.result;
+		document.getElementById("inputTextToSave").value = textFromFileLoaded;
+		for (y=0;y<canvas.height;y++) {
+			for (x=0;x<canvas.width;x++) {
+				if (textFromFileLoaded[x+canvas.width*y]==1) ctx.fillRect(x,y,1,1);
+			}
+		}
+	};
+	fileReader.readAsText(fileToLoad, "UTF-8");
+	
+}
+
+</script>
+
+</body>
+</html>
+
